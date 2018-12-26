@@ -57,4 +57,4 @@ Distributed under the MIT license. See ``LICENSE`` for more information.
 
 ## Awsome projects that help make Booshy possible
 
-[https://github.com/vuejs](vuejs)
+[Vuejs](https://github.com/vuejs)
