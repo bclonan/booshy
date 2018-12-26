@@ -3,9 +3,7 @@
 
 Booshy allows users to create documents with a few clicks, and will allow users to create template documents, reusable docs, dynamic quickfill elements and increase their overall copy workflow.
 
-![](header.png)
 <a href="https://cl.ly/4f4362da9a41" target="_blank"><img src="https://cl.ly/4f4362da9a41/Image%202018-12-26%20at%2012.22.24%20PM.png" style="display: block;height: auto;width: 100%;"/></a>
-![Booshy](https://cl.ly/4f4362da9a41)
 
 ## Project setup
 ```
