@@ -54,3 +54,7 @@ Distributed under the MIT license. See ``LICENSE`` for more information.
 3. Add the dynamic element feature to individual document elements
 4. Email support
 5. CSV Quick fill customer functionality
+
+## Awsome projects that help make Booshy possible
+
+[https://github.com/vuejs](vuejs)
