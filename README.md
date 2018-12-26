@@ -5,6 +5,8 @@ Booshy allows users to create documents with a few clicks, and will allow users 
 
 ![](header.png)
 
+![Booshy](https://cl.ly/4f4362da9a41)
+
 ## Project setup
 ```
 npm install

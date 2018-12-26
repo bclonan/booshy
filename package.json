@@ -1,7 +1,16 @@
 {
   "name": "booshydoc",
   "version": "0.0.1",
-  "private": true,
+  "description": "Booshy is an experimental WYSIWYG desktop document editor.",
+  "keywords": [
+    "wysiwyg",
+    "vuejs",
+    "drag and drop",
+    "document editor",
+    "electron"
+  ],
+  "author": "Brad Clonan",
+  "license": "MIT",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
