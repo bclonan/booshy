@@ -46,3 +46,11 @@ Distributed under the MIT license. See ``LICENSE`` for more information.
 3. Commit your changes (`git commit -am 'Add some fooBar'`)
 4. Push to the branch (`git push origin feature/fooBar`)
 5. Create a new Pull Request
+
+## To-Do
+
+1. Optimize
+2. Write developer documentation
+3. Add the dynamic element feature to individual document elements
+4. Email support
+5. CSV Quick fill customer functionality
