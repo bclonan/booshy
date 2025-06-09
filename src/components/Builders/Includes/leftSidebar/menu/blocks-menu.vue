@@ -13,9 +13,9 @@
 </template>
 
 <script>
-const fs = require('fs');
-const ini = require('ini');
-const uuidv4 = require('uuid/v4');
+import fs from 'fs';
+import ini from 'ini';
+import { v4 as uuidv4 } from 'uuid';
    export default {
       name:"blocksMenu",
       data() {
