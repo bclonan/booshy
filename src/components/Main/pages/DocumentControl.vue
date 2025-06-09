@@ -34,13 +34,11 @@ import {
     singleDocumentNavigation
 } from "@/components/Main/Mixins/singleDocumentNavigation";
 //Document Table Controls
-import docTableControl from "@/components/Main/Includes/table/tableControls/docTableControl.vue";
 //Document Details
 import docDetails from "@/components/Main/Includes/singleDocument/docDetails.vue";
 //Document Preview
 import docPreview from "@/components/Main/Includes/singleDocument/docPreview.vue";
 //Document Quick Fill
-import docQuickFill from "@/components/Main/Includes/singleDocument/docQuickFill.vue";
 //Document Settings
 import docSettings from "@/components/Main/Includes/singleDocument/docSettings.vue";
 //Document Download
@@ -50,16 +48,13 @@ import docExport from "@/components/Main/Includes/singleDocument/docExport.vue";
 //Document Share
 import docShare from "@/components/Main/Includes/singleDocument/docShare.vue";
 //Single Version Table controls
-import docVersionControl from "@/components/Main/Includes/table/tableControls/docVersionControl.vue";
 
 export default {
     name: 'Documents',
     mixins: ["singleDocumentNavigation"],
     components: {
-        docTableControl,
         docDetails,
         docPreview,
-        docQuickFill,
         docSettings,
         docDownload,
         docExport,

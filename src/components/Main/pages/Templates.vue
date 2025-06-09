@@ -187,42 +187,10 @@ fs.writeFileSync(`${__static}/userData/baseConfigz.ini`, ini.stringify(tempHolde
     }
   },
   computed : {
-    dbData () {
+    dbData() {
       const config = ini.parse(fs.readFileSync(`${__static}/userData/baseConfig.ini`, 'utf-8'));
-      const degreeType = config;
-        let docid = 1;
-      
-         //console.log(  Object.values(config.document[docid]))
-        console.log(config.document[docid].createdDate)
-        /*const players = config;
-        console.log(players)
-        let newarray = [];
-        Object.keys(config.document).forEach(function(key) {
-
-          console.log(key)
-          if (key = docid) {
-              newarray.push(config.document[key])
-          } else {
-
-          }
- 
-});
-      this.tryData = config.document[docid];
-      */
-      /*
-var jediPersonnel = personnel.filter(function (person) {
-  return person.isForceUser;
-});
-
-Object.keys(obj).forEach(function(key) {
-
-  console.log(key, obj[key]);
-
-});
-
-      */
-     this.tryData = config.document[docid];
-      return;
+      const docid = 1;
+      return config.document[docid];
     },
     appConfig() {
       const config = ini.parse(fs.readFileSync(`${__static}/userData/baseConfig.ini`, 'utf-8'));
@@ -238,10 +206,8 @@ var jediPersonnel = personnel.filter(function (person) {
     },
     documentModel() {
       const model = ini.parse(fs.readFileSync(`${__static}/userData/documentModel.ini`, 'utf-8'));
-      this.baseDocumentModel = model.userDocumentModel;
-
       return model;
-    }, 
+    },
   },
     created() {
     this.fetchDocuments();
