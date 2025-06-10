@@ -9,7 +9,7 @@ module.exports = {
     ActiveXObject: 'readonly'
   },
   'extends': [
-    'plugin:vue/essential',
+    'plugin:vue/recommended',
     'eslint:recommended'
   ],
   rules: {
