@@ -1,26 +1,19 @@
 // initial state
 const state = {
-    activeDocument: null,
-};
+    activeDocument: null
+}
 
-// getters
 const getters = {
     getDocumentDetails: state => state.activeDocument
-};
+}
 
-// actions
-const actions = {};
+const actions = {}
 
-// mutations
 const mutations = {
     setDocumentDetails: (state, payload) => {
-         if (payload) {
-            state.activeDocument = payload;
-         } else {
-            state.activeDocument = null;
-         }
+        state.activeDocument = payload || null
     }
-};
+}
 
 export default {
     namespaced: true,
@@ -28,4 +21,4 @@ export default {
     getters,
     actions,
     mutations
-};
+}

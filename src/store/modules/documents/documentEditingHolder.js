@@ -2,63 +2,43 @@
 const state = {
     documentContentList: [],
     origionalDocument: [],
-    secondDocumentBackup : [],
-    documentPathFolder : null,
-    builderEditMode : false
-};
+    secondDocumentBackup: [],
+    documentPathFolder: null,
+    builderEditMode: false
+}
 
-// getters
 const getters = {
     getDocumentPathFolder: state => state.documentPathFolder,
     getDocumentContent: state => state.documentContentList,
-    getOrigionalDocument : state => state.origionalDocument,
-    getBuilderEditMode : state => state.builderEditMode
-};
+    getOrigionalDocument: state => state.origionalDocument,
+    getBuilderEditMode: state => state.builderEditMode
+}
 
-// actions
-const actions = {};
+const actions = {}
 
-// mutations
 const mutations = {
-    addNewBlock : (state, payload) => {
-        state.documentContentList.push(payload);
+    addNewBlock: (state, payload) => {
+        state.documentContentList.push(payload)
     },
     updateBlocks(state, documentContentList) {
-      state.documentContentList = documentContentList
+        state.documentContentList = documentContentList
     },
-    removeBlock : (state, payload) => {
-         if (payload) {
-            state.documentContentList = payload;
-         } else {
-            state.documentContentList = null;
-         }
+    removeBlock: (state, payload) => {
+        state.documentContentList = payload || null
     },
-    moveBlock : (state, payload) => {
-         if (payload) {
-            state.documentContentList = payload;
-         } else {
-            state.documentContentList = null;
-         }
+    moveBlock: (state, payload) => {
+        state.documentContentList = payload || null
     },
-    changeBlockContent : (state, payload) => {
-         if (payload) {
-            state.documentContentList = payload;
-         } else {
-            state.documentContentList = null;
-         }
+    changeBlockContent: (state, payload) => {
+        state.documentContentList = payload || null
     },
-    changeBlockQuickFills : (state, payload) => {
-         if (payload) {
-            state.documentContentList = payload;
-         } else {
-            state.documentContentList = null;
-         }
+    changeBlockQuickFills: (state, payload) => {
+        state.documentContentList = payload || null
     },
-    toggleEditMode : (state) => {
-        state.builderEditMode = !state.builderEditMode;
-    },
-    
-};
+    toggleEditMode: (state) => {
+        state.builderEditMode = !state.builderEditMode
+    }
+}
 
 export default {
     namespaced: true,
@@ -66,4 +46,4 @@ export default {
     getters,
     actions,
     mutations
-};
+}

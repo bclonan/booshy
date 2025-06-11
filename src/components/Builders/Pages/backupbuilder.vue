@@ -3,9 +3,11 @@
     <div class="padded-more">
       <h1 class="title">Edit Area</h1>
       <md-view-holder>
-        <draggable :currentDocumentData="currentDocumentData" class="dragArea" v-model="currentDocumentData" slot="content" :move="onMove" :options="dragOptions">
+        <template v-slot:content>
+<draggable :currentDocumentData="currentDocumentData" class="dragArea" v-model="currentDocumentData"  :move="onMove" :options="dragOptions">
         <component v-for="blocks in currentDocumentData" :key="blocks.blockID" :is="blocks.vueComponent"  :content="blocks.content" :editable="editable" @editText="editText"/>
         </draggable>
+</template>
       </md-view-holder>
 
       <md-view-holder :documentContents="contents"/>
@@ -101,7 +103,6 @@ export default {
   computed : {
     dragOptions() {
         return {
-          animation: 0,
           group: 'description',
           disabled: !this.editable,
           ghostClass: 'ghost',

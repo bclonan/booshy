@@ -1,7 +1,9 @@
 <template>
   <h1 @click="editContent">
-    <component v-if="content" v-for="blockContent in content" :key="blockContent.id" :is="blockContent.vueComponent"></component>
-    </h1>
+    <template v-if="content">
+      <component v-for="blockContent in content" :key="blockContent.id" :is="blockContent.vueComponent" />
+    </template>
+  </h1>
 </template>
 
 <script>

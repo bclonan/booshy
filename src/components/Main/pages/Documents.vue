@@ -16,9 +16,9 @@ import docTableControl from "@/components/Main/Includes/table/tableControls/docT
 //Document Table
 import docTable from "@/components/Main/Includes/table/docTable.vue";
 //Get User Documents Mixin
-const fs = require('fs-extra');
-const ini = require('ini');
-const uuidv4 = require('uuid/v4');
+import fs from 'fs-extra';
+import ini from 'ini';
+import { v4 as uuidv4 } from 'uuid';
 
 export default {
     name: 'Documents',
