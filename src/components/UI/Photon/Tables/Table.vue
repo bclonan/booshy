@@ -35,7 +35,7 @@
 
 <script>
    export default {
-      name: "table"
+      name: "data-table"
    }
 </script>
 
