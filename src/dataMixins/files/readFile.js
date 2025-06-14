@@ -1,53 +1,49 @@
-import { remote } from 'electron';
-import path from 'path';
-const fs = require('fs-extra');
-const ini = require('ini');
-
+// Removed direct Node.js imports - will use electron API instead
+// const ini = require('ini'); // Commented out - use electron API instead
 
 function getFileContent(srcPath, callback) { 
-    fs.readFile(srcPath, 'utf8', function (err, data) {
-        if (err) throw err;
-        callback(data);
-        }
-    );
+    // Use electron API instead of direct fs access
+    window.electronAPI.readFile(srcPath)
+        .then(data => callback(data))
+        .catch(err => {
+            console.error('Error reading file:', err);
+            throw err;
+        });
 }
 
 function readBaseIni(srcPath, callback) { 
-  fs.readFile(srcPath, 'utf-8', function (err, data) {
-   if (err) throw err;
-        callback(ini.parse((data)));
-        }
-   );
+    // Use electron API instead of direct fs and ini access
+    window.electronAPI.readIni(srcPath)
+        .then(data => callback(data))
+        .catch(err => {
+            console.error('Error reading ini file:', err);
+            throw err;
+        });
 }
-
-
 
 function writeIniFile(srcPath, newData, sectionData, callback) { 
-     
-  fs.writeFileSync(srcPath, ini.stringify(newData, {
-                section: sectionData
-            }), function (err, data) {
-   if (err) throw err;
-        callback(data);
-        }
-   );
+    // Use electron API instead of direct fs and ini access
+    window.electronAPI.writeIni(srcPath, newData, { section: sectionData })
+        .then(data => callback(data))
+        .catch(err => {
+            console.error('Error writing ini file:', err);
+            throw err;
+        });
 }
-
-//Write Ini File With Callback
-
 
 //Write Ini Promises
 function writeIniNoCallback(srcPath, newData, sectionData) { 
-   
-fs.outputFile(srcPath, ini.stringify(newData, {
-                    section: sectionData
-                })).then(() => fs.readFile(srcPath, 'utf8'))
-.then(data => {
-  console.log(data) // => hello!
-})
-.catch(err => {
-  console.error(err)
-});
+    // Use electron API instead of direct fs and ini access
+    return window.electronAPI.writeIni(srcPath, newData, { section: sectionData })
+        .then(() => window.electronAPI.readFile(srcPath))
+        .then(data => {
+            console.log(data);
+            return data;
+        })
+        .catch(err => {
+            console.error('Error in writeIniNoCallback:', err);
+            throw err;
+        });
 }
 
 

@@ -33,7 +33,7 @@
 </template>
 
 <script>
-const fs = require('fs');
+// Removed direct fs import - will use electron API instead
 const ini = require('ini');
 
 

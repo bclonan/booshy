@@ -18,8 +18,7 @@
 <script>
 //Third Party
 import draggable from 'vuedraggable';
-const fs = require('fs');
-const ini = require('ini');
+// Removed direct fs and ini imports - will use electron API instead
 //mdEditContainer
 import mdViewHolder from "@/components/Builders/Includes/editContainers/MD/view.vue";
 //Header Blocks
@@ -40,32 +39,43 @@ export default {
       documentContentTestListRemoveSecond: [],
       origDocData: [],
     };
-  },
-  methods : {
+  },  methods : {
     //Fetch Document Data
-    fetchDocumentData () {
-      const docs = ini.parse(fs.readFileSync(`${__static}/userDocs/testDoc.ini`, 'utf-8'));
+    async fetchDocumentData () {
+      try {
+        const data = await window.electronAPI.readFile(`${__static}/userDocs/testDoc.ini`);
+        const ini = require('ini');
+        const docs = ini.parse(data);
 
-            const userdocs = docs.block;
-            let tempHolder = [];
-            Object.keys(docs.block).forEach(function(key) {
-                tempHolder.push(docs.block[key])
-            });
+        const userdocs = docs.block;
+        let tempHolder = [];
+        Object.keys(docs.block).forEach(function(key) {
+            tempHolder.push(docs.block[key])
+        });
 
-            this.documentContentTestListRemove = tempHolder;
-            return;
+        this.documentContentTestListRemove = tempHolder;
+        return;
+      } catch (error) {
+        console.error('Error reading file:', error);
+      }
     },
-    fetchSecondDocumentData () {
-      const docs = ini.parse(fs.readFileSync(`${__static}/userDocs/testDocHolder.ini`, 'utf-8'));
+    async fetchSecondDocumentData () {
+      try {
+        const data = await window.electronAPI.readFile(`${__static}/userDocs/testDocHolder.ini`);
+        const ini = require('ini');
+        const docs = ini.parse(data);
 
-            const userdocs = docs.block;
-            let tempHolder = [];
-            Object.keys(docs.block).forEach(function(key) {
-                tempHolder.push(docs.block[key])
-            });
+        const userdocs = docs.block;
+        let tempHolder = [];
+        Object.keys(docs.block).forEach(function(key) {
+            tempHolder.push(docs.block[key])
+        });
 
-            this.documentContentTestListRemoveSecond = tempHolder;
-            return;
+        this.documentContentTestListRemoveSecond = tempHolder;
+        return;
+      } catch (error) {
+        console.error('Error reading file:', error);
+      }
     },
      onMove({ relatedContext, draggedContext }) {
         const relatedElement = relatedContext.element;

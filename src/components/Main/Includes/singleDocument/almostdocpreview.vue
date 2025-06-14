@@ -42,9 +42,7 @@
 
 <script>
 import { readBaseIni, writeIniFile, writeIniNoCallback } from "@/dataMixins/files/readFile.js";
-const fs = require('fs-extra');
-const ini = require('ini');
-import path from 'path'
+// Removed direct fs, ini and path imports - will use electron API instead
 //MD Previewer
 import mdPreviewContainer from "@/components/Main/Includes/previewContainer/markdownPreview.vue";
 

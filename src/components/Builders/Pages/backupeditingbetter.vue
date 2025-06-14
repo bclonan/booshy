@@ -18,8 +18,7 @@
 <script>
 //Third Party
 import draggable from 'vuedraggable';
-const fs = require('fs');
-const ini = require('ini');
+// Removed direct fs and ini imports - will use electron API instead
 //mdEditContainer
 import mdViewHolder from "@/components/Builders/Includes/editContainers/MD/view.vue";
 //Header Blocks

@@ -1,7 +1,10 @@
 'use strict'
 
-const fs = require('fs')
-const path = require('path')
+// const fs = require('fs') // Commented out - use electron API instead
+// const path = require('path') // Commented out - use electron API instead
+
+// This module needs to be refactored to use electron API
+console.log('module.js - File system operations need to be moved to main process');
 
 let moduleName = process.argv[2]
 let template = fs.readFileSync(

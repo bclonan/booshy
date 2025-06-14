@@ -1,10 +1,12 @@
 'use strict'
 
-import { app, protocol, BrowserWindow } from 'electron'
+import { app, protocol, BrowserWindow, ipcMain } from 'electron'
 import {
-  createProtocol,
-  installVueDevtools
+  createProtocol
 } from 'vue-cli-plugin-electron-builder/lib'
+import fs from 'fs'
+import path from 'path'
+import ini from 'ini'
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
 //optional
@@ -14,21 +16,70 @@ const windowStateKeeper = require('electron-window-state');
 // be closed automatically when the JavaScript object is garbage collected.
 let win
 
-// Standard scheme must be registered before the app is ready
-protocol.registerStandardSchemes(['app'], { secure: true })
+// Scheme must be registered before the app is ready
+protocol.registerSchemesAsPrivileged([
+  { scheme: 'app', privileges: { secure: true, standard: true } }
+])
+
+// Add IPC handlers
+ipcMain.handle('read-file', async (event, filePath) => {
+  return fs.readFileSync(filePath, 'utf-8')
+})
+
+ipcMain.handle('write-file', async (event, filePath, data) => {
+  fs.writeFileSync(filePath, data)
+  return true
+})
+
+ipcMain.handle('read-dir', async (event, dirPath) => {
+  return fs.readdirSync(dirPath)
+})
+
+ipcMain.handle('get-path', async (event, name) => {
+  return app.getPath(name)
+})
+
+ipcMain.handle('get-public-path', async (event) => {
+  return isDevelopment 
+    ? path.join(__dirname, '../public')
+    : path.join(process.resourcesPath, 'app', 'dist_electron', 'public')
+})
+
+// INI file handlers
+ipcMain.handle('read-ini', async (event, filePath) => {
+  const content = fs.readFileSync(filePath, 'utf-8')
+  return ini.parse(content)
+})
+
+ipcMain.handle('write-ini', async (event, filePath, data) => {
+  const content = ini.stringify(data)
+  fs.writeFileSync(filePath, content)
+  return true
+})
 function createWindow () {
-    //optional toremove
+  //optional toremove
   let mainWindowState = windowStateKeeper({
     defaultWidth: 1000,
     defaultHeight: 800
   });
   //end of optional
+  
   // Create the browser window.
-  win = new BrowserWindow({ title: 'XYZ Draw', 
-  backgroundColor: '#002b36',  'x': mainWindowState.x,
-    'y': mainWindowState.y,
-    'width': mainWindowState.width,
-    'height': mainWindowState.height })
+  win = new BrowserWindow({ 
+    title: 'XYZ Draw', 
+    backgroundColor: '#002b36',  
+    x: mainWindowState.x,
+    y: mainWindowState.y,
+    width: mainWindowState.width,
+    height: mainWindowState.height,    webPreferences: {
+      nodeIntegration: false,
+      contextIsolation: true,
+      enableRemoteModule: false,
+      preload: isDevelopment 
+        ? path.join(__dirname, '../src/preload.js')
+        : path.join(__dirname, 'preload.js')
+    }
+  })
 
   if (isDevelopment || process.env.IS_TEST) {
     // Load the url of the dev server if in development mode
@@ -67,10 +118,14 @@ app.on('activate', () => {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', async () => {
-
   if (isDevelopment && !process.env.IS_TEST) {
-    // Install Vue Devtools
-    await installVueDevtools()
+    // Install Vue Devtools using the modern approach
+    try {
+      const { default: installExtension, VUEJS3_DEVTOOLS } = await import('electron-devtools-installer')
+      await installExtension(VUEJS3_DEVTOOLS)
+    } catch (e) {
+      console.error('Vue Devtools failed to install:', e.toString())
+    }
   }
 
   createWindow()

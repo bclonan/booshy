@@ -1,42 +1,59 @@
-const electron = require('electron');
-const path = require('path');
-const fs = require('fs');
+// Removed direct Node.js imports - will use electron API instead
+// const electron = require('electron'); // Commented out - use electron API instead
+// const path = require('path'); // Commented out - use electron API instead
+// const fs = require('fs'); // Commented out - use electron API instead
 
 class electronStore {
   constructor(opts) {
-    // Renderer process has to get `app` module via `remote`, whereas the main process can get it directly
-    // app.getPath('userData') will return a string of the user's app data directory path.
-    const userDataPath = (electron.app || electron.remote.app).getPath('userData');
-    // We'll use the `configName` property to set the file name and path.join to bring it all together as a string
-    this.path = path.join(userDataPath, opts.configName + '.json');
+    // Use electron API instead of direct electron module access
+    this.configName = opts.configName;
+    this.defaults = opts.defaults;
+    this.data = null;
     
-    this.data = parseDataFile(this.path, opts.defaults);
+    // Initialize data asynchronously
+    this.initData();
+  }
+  
+  async initData() {
+    try {
+      const publicPath = await window.electronAPI.getPublicPath();
+      this.path = `${publicPath}/${this.configName}.json`;
+      this.data = await this.parseDataFile(this.path, this.defaults);
+    } catch (error) {
+      console.error('Error initializing electron store:', error);
+      this.data = this.defaults;
+    }
   }
   
   // This will just return the property on the `data` object
   get(key) {
-    return this.data[key];
+    return this.data ? this.data[key] : undefined;
   }
   
   // ...and this will set it
-  set(key, val) {
+  async set(key, val) {
+    if (!this.data) {
+      await this.initData();
+    }
+    
     this.data[key] = val;
-    // Wait, I thought using the node.js' synchronous APIs was bad form?
-    // We're not writing a server so there's not nearly the same IO demand on the process
-    // Also if we used an async API and our app was quit before the asynchronous write had a chance to complete,
-    // we might lose that data. Note that in a real app, we would try/catch this.
-    fs.writeFileSync(this.path, JSON.stringify(this.data));
+    
+    try {
+      await window.electronAPI.writeFile(this.path, JSON.stringify(this.data));
+    } catch (error) {
+      console.error('Error writing to electron store:', error);
+    }
   }
-}
-
-function parseDataFile(filePath, defaults) {
-  // We'll try/catch it in case the file doesn't exist yet, which will be the case on the first application run.
-  // `fs.readFileSync` will return a JSON string which we then parse into a Javascript object
-  try {
-    return JSON.parse(fs.readFileSync(filePath));
-  } catch(error) {
-    // if there was some kind of error, return the passed in defaults instead.
-    return defaults;
+  
+  async parseDataFile(filePath, defaults) {
+    try {
+      const data = await window.electronAPI.readFile(filePath);
+      return JSON.parse(data);
+    } catch(error) {
+      // if there was some kind of error, return the passed in defaults instead.
+      console.log('Using defaults for electron store');
+      return defaults;
+    }
   }
 }
 

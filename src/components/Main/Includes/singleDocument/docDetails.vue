@@ -40,9 +40,7 @@
 import docVersionControl from "@/components/Main/Includes/table/tableControls/docVersionControl.vue";
 import { readBaseIni, writeIniFile, writeIniNoCallback } from "@/dataMixins/files/readFile.js";
 
-import path from 'path'
-const fs = require('fs-extra');
-const ini = require('ini');
+// Removed direct path and fs imports - will use electron API instead
 //Version Table
 import versionTable from "@/components/Main/Includes/table/docVersionTable.vue";
 export default {

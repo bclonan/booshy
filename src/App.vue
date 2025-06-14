@@ -1,9 +1,5 @@
 <template>
   <span id="app">
-    <router-view/>
+    <router-view />
   </span>
 </template>
-
-<style lang="scss">
-
-</style>

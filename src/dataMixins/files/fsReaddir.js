@@ -1,7 +1,7 @@
 /*
- create an object from the fs module
+ create an object from the fs module - UPDATED TO USE ELECTRON API
  */
-const fs = require('fs');
+// const fs = require('fs'); // Commented out - use electron API instead
 
 /*
  fs module provides a method readdir() which takes, as parameter, the path of the directory, and a callback of what we want to do with the obtained files.
